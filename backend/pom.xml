@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Spring Boot Parent POM - manages all Spring dependency versions -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.2</version>
+        <relativePath/>
+    </parent>
+    
+    <groupId>com.hiretrack</groupId>
+    <artifactId>hiretrack-backend</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>hiretrack-backend</name>
+    <description>HireTrack AI Backend - Spring Boot Modular Monolith</description>
+    
+    <properties>
+        <java.version>21</java.version>
+        <testcontainers.version>2.0.5</testcontainers.version>
+        <flyway.version>11.3.0</flyway.version>
+    </properties>
+    
+    <!-- Testcontainers BOM must be in dependencyManagement to provide versions -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Override Flyway version for PostgreSQL 16 support -->
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-database-postgresql</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    <dependencies>
+        <!-- Spring Boot Web: REST controllers, embedded Tomcat, Jackson JSON -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
+        <!-- Spring Boot JPA: Hibernate/JPA for entities (Phase 2+) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        
+        <!-- Bean Validation: JSR-380 @Valid, @NotNull, etc. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        
+        <!-- Actuator: /actuator/health endpoint, metrics -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        
+        <!-- Flyway: Database migrations (Spring Boot 4 requires starter) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-flyway</artifactId>
+        </dependency>
+        
+        <!-- Flyway PostgreSQL: Required for PostgreSQL 16 support -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <!-- PostgreSQL JDBC Driver -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <!-- H2 Database: In-memory database for tests -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Spring Boot Test: JUnit 5, Mockito, Spring Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Spring Boot Web MVC Test: MockMvc, @WebMvcTest -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Spring Boot REST Client: For TestRestTemplate -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-restclient</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- TestRestTemplate module (Spring Boot 4) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-resttestclient</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Testcontainers: Docker containers in tests -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Testcontainers JUnit 5: @Testcontainers, @Container -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-junit-jupiter</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Testcontainers PostgreSQL: PostgreSQLContainer -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-postgresql</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <!-- Spring Boot Maven Plugin: enables mvn spring-boot:run -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

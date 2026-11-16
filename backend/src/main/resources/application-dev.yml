@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hiretrack_dev
+    username: hiretrack
+    password: localpassword
+  
+  jpa:
+    show-sql: true                    # Log SQL queries in console
+
+logging:
+  level:
+    com.hiretrack: DEBUG              # Verbose logging for our code
+    org.springframework.web: DEBUG

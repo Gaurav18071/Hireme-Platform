@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    # H2 in-memory database for tests (without Testcontainers)
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  
+  h2:
+    console:
+      enabled: false
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # Let JPA create schema for tests (no real entities yet)
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+  
+  flyway:
+    enabled: false  # Disable Flyway for unit tests (PostgreSQL migrations incompatible with H2)
+
+logging:
+  level:
+    com.hiretrack: DEBUG
+    org.springframework.web: WARN
+    org.hibernate.SQL: DEBUG

@@ -1,0 +1,5 @@
+# Maven build output
+target/
+
+# Maven wrapper is COMMITTED (ensures consistent Maven version)
+# Do NOT ignore .mvn/, mvnw, mvnw.cmd

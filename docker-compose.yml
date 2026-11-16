@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: hiretrack-postgres-dev
+    environment:
+      POSTGRES_DB: hiretrack_dev
+      POSTGRES_USER: hiretrack
+      POSTGRES_PASSWORD: localpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - hiretrack-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  hiretrack-postgres-data:

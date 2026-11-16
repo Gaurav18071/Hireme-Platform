@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: hiretrack
+  
+  # Active profile set via environment variable: SPRING_PROFILES_ACTIVE=dev
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate              # Flyway owns schema
+    show-sql: false                   # Production default (dev overrides)
+    open-in-view: false               # Prevents view-layer lazy loading
+  
+  flyway:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: when-authorized   # Hide DB details from unauthenticated users
