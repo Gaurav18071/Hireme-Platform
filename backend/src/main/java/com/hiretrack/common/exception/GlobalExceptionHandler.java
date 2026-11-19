@@ -58,6 +58,51 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problemDetail;
     }
     
+    /**
+     * Handle NotFoundException (404).
+     * Used for tenant isolation: return 404 for cross-org access attempts.
+     */
+    @ExceptionHandler(NotFoundException.class)
+    public ProblemDetail handleNotFoundException(NotFoundException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+            HttpStatus.NOT_FOUND,
+            ex.getMessage()
+        );
+        problemDetail.setTitle("Not Found");
+        problemDetail.setType(URI.create("about:blank"));
+        return problemDetail;
+    }
+    
+    /**
+     * Handle ForbiddenException (403).
+     * Used for authorization failures (authenticated but insufficient role).
+     */
+    @ExceptionHandler(ForbiddenException.class)
+    public ProblemDetail handleForbidden(ForbiddenException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+            HttpStatus.FORBIDDEN,
+            ex.getMessage()
+        );
+        problemDetail.setTitle("Forbidden");
+        problemDetail.setType(URI.create("about:blank"));
+        return problemDetail;
+    }
+    
+    /**
+     * Handle ConflictException (409).
+     * Used for duplicate email, business rule violations, etc.
+     */
+    @ExceptionHandler(ConflictException.class)
+    public ProblemDetail handleConflict(ConflictException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+            HttpStatus.CONFLICT,
+            ex.getMessage()
+        );
+        problemDetail.setTitle("Conflict");
+        problemDetail.setType(URI.create("about:blank"));
+        return problemDetail;
+    }
+    
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleGenericException(Exception ex) {
         log.error("Unexpected error", ex);

@@ -12,6 +12,24 @@ spring:
   
   flyway:
     enabled: true
+  
+  # Spring Session JDBC: server-side session storage
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: never        # Flyway owns schema (V5 migration)
+      table-name: spring_session
+
+# Server configuration
+server:
+  servlet:
+    session:
+      timeout: 30m                    # Session timeout (30 minutes of inactivity)
+      cookie:
+        http-only: true               # Prevent JavaScript access to session cookie
+        secure: false                 # Dev default (no HTTPS); prod overrides to true
+        same-site: lax                # CSRF protection (lax allows GET from external sites)
+        name: SESSION                 # Cookie name (default is JSESSIONID)
 
 management:
   endpoints:
